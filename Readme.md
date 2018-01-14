@@ -6,6 +6,7 @@
 * No multi GPUs yet tested
 
 ## Dependencies:
+* python 3.x ( tested on 3.5 )
 * pip install py3nvml
 * pip install prometheus_client
 
