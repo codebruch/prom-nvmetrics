@@ -11,14 +11,14 @@ def initialize_gpus():
        for gpu in root.getiterator('gpu'):
            gpuName =(gpu.find('product_name').text)
            print('Found: ' + gpuName)
-           gTemperature = Gauge('GPU_Temperature', 'Temperature of GPU: ' + gpuName)
-           gfan_speed = Gauge('GPU_fan_speed', 'Fan Speed of GPU: '+ gpuName)
-           gfb_memory_usage = Gauge('GPU_memory_usage', 'Memory usage of GPU: ' + gpuName)
-           gfb_memory_total = Gauge('GPU_memory_total', 'Total Memory usage of GPU: ' + gpuName)
-           ggraphics_clock = Gauge('GPU_graphics_clock', 'Graphics clock of GPU: ' + gpuName)
-           gmem_clock = Gauge('GPU_memory_clock', 'Memory clock of GPU: ' + gpuName)
-           gpower_draw = Gauge('GPU_power_draw', 'Power draw of GPU: ' + gpuName)
-           ggpu_util = Gauge('GPU_util', 'Utilization of GPU: ' + gpuName)
+           gTemperature = Gauge('GPU_Temperature', 'Temperature of GPU: ' + gpuName, labelnames=['card'])
+           gfan_speed = Gauge('GPU_fan_speed', 'Fan Speed of GPU: '+ gpuName, labelnames=['card'])
+           gfb_memory_usage = Gauge('GPU_memory_usage', 'Memory usage of GPU: ' + gpuName, labelnames=['card'])
+           gfb_memory_total = Gauge('GPU_memory_total', 'Total Memory usage of GPU: ' + gpuName, labelnames=['card'])
+           ggraphics_clock = Gauge('GPU_graphics_clock', 'Graphics clock of GPU: ' + gpuName, labelnames=['card'])
+           gmem_clock = Gauge('GPU_memory_clock', 'Memory clock of GPU: ' + gpuName, labelnames=['card'])
+           gpower_draw = Gauge('GPU_power_draw', 'Power draw of GPU: ' + gpuName, labelnames=['card'])
+           ggpu_util = Gauge('GPU_util', 'Utilization of GPU: ' + gpuName, labelnames=['card'])
        return  {'gTemperature': gTemperature, 'gfan_speed': gfan_speed,'gfb_memory_usage': gfb_memory_usage,
                 'ggraphics_clock': ggraphics_clock, 'gpower_draw': gpower_draw, 'ggpu_util': ggpu_util,
                 'gfb_memory_total': gfb_memory_total,'gmem_clock': gmem_clock}
@@ -40,37 +40,37 @@ def execute_and_read_from_SMI(metrics):
     root = ET.fromstring(out)
     #print(out)
     for gpu in root.getiterator('gpu'):
-                         
+        gpuName =(gpu.find('product_name').text)                  
         temperature=[float(gpu.find('temperature/gpu_temp').text.split()[0])]
         #print(temperature[0])
-        gTemperature.set(temperature[0])
+        gTemperature.labels(gpuName).set(temperature[0])
 
         fan_speed = [float(gpu.find('fan_speed').text.split()[0])]
-        gfan_speed.set(fan_speed[0])
+        gfan_speed.labels(gpuName).set(fan_speed[0])
 
         
         fb_memory_usage = [1e6 * float(gpu.find('fb_memory_usage/used').text.split()[0])]
-        gfb_memory_usage.set(fb_memory_usage[0])
+        gfb_memory_usage.labels(gpuName).set(fb_memory_usage[0])
         
         
         fb_memory_total = [1e6 * float(gpu.find('fb_memory_usage/total').text.split()[0])]
-        gfb_memory_total.set(fb_memory_total[0])
+        gfb_memory_total.labels(gpuName).set(fb_memory_total[0])
         
        
         gpu_util = [float(gpu.find('utilization/gpu_util').text.split()[0])]
-        ggpu_util.set(gpu_util[0])
+        ggpu_util.labels(gpuName).set(gpu_util[0])
      
         power_draw = [float(gpu.find('power_readings/power_draw').text.split()[0])]
         #print(power_draw)
-        gpower_draw.set(power_draw[0])
+        gpower_draw.labels(gpuName).set(power_draw[0])
 
         
         graphics_clock = [float(gpu.find('clocks/graphics_clock').text.split()[0])]
-        ggraphics_clock.set(graphics_clock[0])
+        ggraphics_clock.labels(gpuName).set(graphics_clock[0])
         
 
         mem_clock = [float(gpu.find('clocks/mem_clock').text.split()[0])]
-        gmem_clock.set(mem_clock[0])
+        gmem_clock.labels(gpuName).set(mem_clock[0])
 
 
 
