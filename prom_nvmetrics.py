@@ -6,6 +6,8 @@ import py3nvml.nvidia_smi as smi
 
 #initialize GPUs to get dynamic name assignment for metric description
 def initialize_gpus():
+       smi.nvmlInit()
+       print ("Driver Version: ", smi.nvmlSystemGetDriverVersion())
        out = smi.XmlDeviceQuery()
        root = ET.fromstring(out)
        for gpu in root.getiterator('gpu'):
