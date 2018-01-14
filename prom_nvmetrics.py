@@ -83,7 +83,7 @@ if __name__ == '__main__':
     # Generate some requests.
     while True:
         print('sleep')
-        time.sleep(2)
+        time.sleep(0.3)
         print('update metrics')
         execute_and_read_from_SMI(metrics)
         
