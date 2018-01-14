@@ -10,7 +10,7 @@ def initialize_gpus():
        root = ET.fromstring(out)
        for gpu in root.getiterator('gpu'):
            gpuName =(gpu.find('product_name').text)
-           print(gpuName)
+           print('Found: ' + gpuName)
            gTemperature = Gauge('GPU_Temperature', 'Temperature of GPU: ' + gpuName)
            gfan_speed = Gauge('GPU_fan_speed', 'Fan Speed of GPU: '+ gpuName)
            gfb_memory_usage = Gauge('GPU_memory_usage', 'Memory usage of GPU: ' + gpuName)
@@ -38,7 +38,7 @@ def execute_and_read_from_SMI(metrics):
 
     out = smi.XmlDeviceQuery()
     root = ET.fromstring(out)
-    print(out)
+    #print(out)
     for gpu in root.getiterator('gpu'):
                          
         temperature=[float(gpu.find('temperature/gpu_temp').text.split()[0])]
@@ -61,7 +61,7 @@ def execute_and_read_from_SMI(metrics):
         ggpu_util.set(gpu_util[0])
      
         power_draw = [float(gpu.find('power_readings/power_draw').text.split()[0])]
-        print(power_draw)
+        #print(power_draw)
         gpower_draw.set(power_draw[0])
 
         
@@ -82,6 +82,9 @@ if __name__ == '__main__':
     start_http_server(8000)
     # Generate some requests.
     while True:
+        print('sleep')
         time.sleep(2)
+        print('update metrics')
         execute_and_read_from_SMI(metrics)
+        
         
