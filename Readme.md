@@ -1,5 +1,7 @@
-# A prometheus exporter for metrics Nvidia based GPUs
-* For usage in a grafana + prometheus monitoring setup
+# A prometheus exporter for metrics NVIDIA based GPUs
+* Inofficial no affiliation with NVIDIA
+* For usage in a grafana https://grafana.com/ + prometheus https://prometheus.io/ monitoring setup
+* Uses py3nvml https://github.com/fbcotter/py3nvml
 * Tested on windows
 * No multi GPUs yet tested
 
