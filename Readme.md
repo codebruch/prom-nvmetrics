@@ -1,9 +1,9 @@
-# A simple prometheus exporter for metrics NVIDIA based GPUs
+# A simple prometheus exporter for metrics of NVIDIA based GPUs
 * Inofficial no affiliation with NVIDIA
 * For usage in a grafana https://grafana.com/ + prometheus https://prometheus.io/ monitoring setup
 * Uses py3nvml https://github.com/fbcotter/py3nvml
-* Tested on windows
-* No multi GPUs yet tested
+* Tested on windows and linux
+* No multi GPUs
 
 ## Dependencies:
 * python 3.x ( tested on 3.5 )
@@ -23,8 +23,8 @@
 More can be added simply
 
 ## Usage
-* Start it like python prom_nvmetrics.py 
-* Make sure to user your 64 bit python installation if your nvidia driver is also 64 bit
+* Run python prom_nvmetrics.py
+* Make sure to use your 64 bit python installation if your nvidia driver is also 64 bit
 * It will listen on port 8000 per default, metrics available at http://localhost:8000/metrics
-* Use you prometheus + grafana setup to add it and build a nice dashboard
+* Use your prometheus + grafana setup to add it as target and build a nice dashboard
 
